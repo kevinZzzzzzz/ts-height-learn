@@ -1,0 +1,2 @@
+const teacher = 'kevinZzzzzz';
+console.log(teacher);
