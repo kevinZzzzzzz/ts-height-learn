@@ -22,4 +22,3 @@ type ReverArr<T extends any[]> = T extends [infer First, ...infer Rest] ? [...Re
 type Arr4 = ReverArr<Arr3>
 let arr3: Arr3 = [1,2,3,4]
 let arr4: ReverArr<Arr3> = [4,3,2,1]
-

@@ -13,7 +13,8 @@
             this.name = name
         }
         static sayHi() {
-            console.log('萨瓦迪卡')
+            // 静态成员只在静态方法中可以使用this
+            console.log('萨瓦迪卡', this.name1)
         }
     }
     const person:Person = new Person('哈哈哈')
