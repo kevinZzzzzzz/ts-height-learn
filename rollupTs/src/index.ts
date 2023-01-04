@@ -22,3 +22,20 @@ type ReverArr<T extends any[]> = T extends [infer First, ...infer Rest] ? [...Re
 type Arr4 = ReverArr<Arr3>
 let arr3: Arr3 = [1,2,3,4]
 let arr4: ReverArr<Arr3> = [4,3,2,1]
+
+
+// 获取类型
+type ID = number[]
+type INAME = string[]
+type Unpacked<T> = T extends INAME ? string : T extends ID ? number : T
+type nameType = Unpacked<INAME>
+type nameType1 = Unpacked<ID>
+
+type ElementOf<T> = T extends Array<infer E> ? E : T
+type res = ElementOf<string[]>
+type res1 = ElementOf<ID>
+type res2 = ElementOf<boolean>
+type res3 = ElementOf<[string, number]>
+
+type Foo<T> = T extends {a: infer U; b: infer U} ? U : never
+type T11 = Foo<{a: string; b: number}>
