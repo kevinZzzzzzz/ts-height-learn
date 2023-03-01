@@ -25,3 +25,4 @@ type Person2 = {
   address: string
 }
 type A = Pick<Person2, keyof Person2>
+     

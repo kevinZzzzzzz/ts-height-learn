@@ -33,7 +33,34 @@
     console.log(undef)
     console.log(nll)
     console.log(str)
-
+    /* 
+        unknown 
+    */
+    // 1、任何类型可以赋值给unknown类型
+    let str1: unknown;
+    str1 = 12
+    str1 = 'we'
+    str1 = [1,2,3,4]
+    // 2、不能将unknown类型赋值给其他类型
+    let str4: unknown = 19
+    let num: number
+    // num = str4 // 不能将类型“unknown”分配给类型“number”。
+    /* 
+        解决方法
+        1、使用类型断言
+            num = str4 as number
+        2、缩小类型判断
+            if (type num === 'number') num = str4
+        3、unknown 与其他任何类型组成的交叉类型最后都是其他类型
+            type MyType1 = number & unknown ==========>number
+            type MyType2 = string & unknown ==========>string
+        4、unknown除了any外，与其他任何类型组成的联合类型都unknown
+            type MyType3 = number ｜ unknown ==========>unknown
+            type MyType4 = string ｜ unknown ==========>unknown
+        5、never 是unknown类型的字类型
+            type Mytype5 = never extends unknown ? true : false
+     */
+// 3、
     // 数组类型
     // 类型[]写法
     let arr1: number[] = [1,2,3,4]
