@@ -16,6 +16,7 @@ type TodoPreview = MyPick<Todo, 'title' | 'completed'>;
 const todo: TodoPreview = {
   title: 'Clean room',
   completed: false,
+  // description: '123' // 对象字面量只能指定已知属性，并且“description”不在类型“TodoPreview”中。
 };
 //////////////////////////////////////////////////////
 type MyPick<T, K extends keyof T> = {
@@ -50,12 +51,14 @@ type MyReadonly<T> = {
   元组转换为对象
     题目描述
     传入一个元组类型，将这个元组类型转换为对象类型，这个对象类型的键/值都是从元组中遍历出来。
+     as const => readonly
 */
 const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const;
 
 type result = TupleToObject<typeof tuple>;
 type TupleToObject<T extends readonly PropertyKey[]> = {
   [P in T[number]]: P
+  // [P in keyof T]: T[P]
 }
 
 /* 
@@ -70,3 +73,37 @@ type head1 = First<arr1>; // expected to be 'a'
 type head2 = First<arr2>; // expected to be 3
 // type First<T extends any[]> = T extends [infer first, ...infer last] ? first : never;
 type First<T extends any[]> = T['length'] extends 0 ? never : T[0];
+
+/* 
+  获取元组长度
+    题目描述
+      创建一个通用的Length，接受一个readonly的数组，返回这个数组的长度。
+*/
+type tesla = ['tesla', 'model 3', 'model X', 'model Y'];
+type spaceX = [
+  'FALCON 9',
+  'FALCON HEAVY',
+  'DRAGON',
+  'STARSHIP',
+  'HUMAN SPACEFLIGHT',
+];
+
+type teslaLength = Length<tesla>; // expected 4
+type spaceXLength = Length<spaceX>; // expected 5
+
+type Length<T extends any[]> = T['length']
+
+/* 
+  实现Exclude
+    题目描述
+      实现内置的 Exclude <T, U>类型，但不能直接使用它本身。
+      1、联合类型，那么就会触发 ts 的分发特性
+      2、只有泛型才会触发分发特性
+*/
+type Result = MyExclude<'a' | 'b' | 'c', 'a'>; // 'b' | 'c'
+type MyExclude<T, U> = T extends U ? never : T
+
+type Example<T> = T extends string ? 1 : 2;
+// 简单类型，不会分发，结果为 2
+type Case2 = '1' | 1 extends string ? 1 : 2;
+type Case3 = Example<'1' | 1>;
