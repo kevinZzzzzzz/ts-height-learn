@@ -23,6 +23,32 @@ type Arr4 = ReverArr<Arr3>
 let arr3: Arr3 = [1,2,3,4]
 let arr4: ReverArr<Arr3> = [4,3,2,1]
 
+type StringToNumber<S extends string> = S extends `${infer Num extends number}` ? Num : never;
+type A1 = StringToNumber<''>; // => never
+type B1 = StringToNumber<'1'>; // => 1
+type C1 = StringToNumber<'1.2'>; // => 1.2
+
+type Count<
+  Nums extends readonly number[],
+  Num extends number,
+  Result extends readonly unknown[] = [],
+> = Nums extends [infer First, ...infer Rest extends readonly number[]]
+  ? First extends Num
+    ? Count<Rest, Num, [...Result, unknown]>
+    : Count<Rest, Num, Result>
+  : Result['length'];
+
+type X = Count<[1, 2, 2, 3], 2>; // => type X = 2;
+declare function PromiseAll<T extends readonly any[]>(values: T): Promise<GetReturn<T>>;
+
+type GetReturn<T extends readonly any[]> = T extends readonly [infer First, ...infer Rest]
+  ? [Awaited<First>, ...GetReturn<Rest>]
+  : T extends []
+    ? []
+    : T extends Array<infer E>
+      ? Array<Awaited<E>>
+      : [];
+const R = PromiseAll([1, 2, 3]); // const R: Promise<number[]>
 
 // 获取类型
 type ID = number[]

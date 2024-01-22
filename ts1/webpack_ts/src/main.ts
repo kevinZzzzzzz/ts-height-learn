@@ -1,8 +1,8 @@
 // import './basic.ts' // 基础
-import './hightBasic.ts' // 接口 类
+// import './hightBasic.ts' // 接口 类
 // import './class.ts' // 类
 // import './polymorphism.ts' // 多态
-// import './modifier.ts' // 修饰符
+import './modifier.ts' // 修饰符
 // import './memory.ts' // 存储器
 // import './static.ts' // 静态属性
 // import './abstract.ts' // 抽象方法
