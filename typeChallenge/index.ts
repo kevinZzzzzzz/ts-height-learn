@@ -64,7 +64,7 @@ type TupleToObject<T extends readonly PropertyKey[]> = {
 /* 
   第一个元素
     题目描述
-      实现一个通用First<T>，它接受一个数组T并返回它的第一个元素的类型。
+      实现一个通用First<T>， 它接受一个数组T并返回它的第一个元素的类型。
 */
 type arr1 = ['a', 'b', 'c'];
 type arr2 = [3, 2, 1];
