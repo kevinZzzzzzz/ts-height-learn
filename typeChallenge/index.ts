@@ -42,7 +42,7 @@ const todo1: MyReadonly<Todo1> = {
 
 todo1.title = 'Hello'; // Error: cannot reassign a readonly property 无法分配到 "title" ，因为它是只读属性。
 todo1.description = 'barFoo'; // Error: cannot reassign a readonly property 无法分配到 "description" ，因为它是只读属性。
-
+//////////////////////////////////////////////////////
 type MyReadonly<T> = {
   readonly [P in keyof T]: T[P]
 }
@@ -102,8 +102,19 @@ type Length<T extends any[]> = T['length']
 */
 type Result = MyExclude<'a' | 'b' | 'c', 'a'>; // 'b' | 'c'
 type MyExclude<T, U> = T extends U ? never : T
-
+// ts 的分发特性
 type Example<T> = T extends string ? 1 : 2;
 // 简单类型，不会分发，结果为 2
 type Case2 = '1' | 1 extends string ? 1 : 2;
 type Case3 = Example<'1' | 1>;
+
+/* 
+  实现Awaited
+    题目描述
+    假如我们有一个 Promise 对象，这个 Promise 对象会返回一个类型。在 TS 中，我们用 Promise<T> 中的 T 来描述这个 Promise 返回的类型。请你实现一个类型，可以获取这个类型。
+*/
+type ExampleType = Promise<string>;
+
+type Result1 = MyAwaited<ExampleType>; // string
+// type Case2 = MyAwaited<Promise<Promise<string>>>; // string
+type MyAwaited<T> = T extends Promise<infer R> ? R : never
