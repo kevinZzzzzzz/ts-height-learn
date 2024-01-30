@@ -118,3 +118,10 @@ type ExampleType = Promise<string>;
 type Result1 = MyAwaited<ExampleType>; // string
 // type Case2 = MyAwaited<Promise<Promise<string>>>; // string
 type MyAwaited<T> = T extends Promise<infer R> ? R : never
+// Promise 嵌套的场景:
+type Case4 = MyAwaited2<Promise<Promise<string>>>; // Promise<string>
+type Case5 = MyAwaited2<Promise<Promise<Promise<Promise<number>>>>>
+type MyAwaited2<T> = T extends Promise<infer R> ? MyAwaited2<R> : T
+
+
+
